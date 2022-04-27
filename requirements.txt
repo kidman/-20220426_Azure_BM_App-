@@ -6,3 +6,4 @@ pre-commit
 sphinx
 tox
 tox-gh-actions
+whitenoise
