@@ -126,6 +126,8 @@ STATICFILES_STORAGE = 'whotenoise.storage.CompressedManifestStaticFilesStorage'
 #STATIC_ROOT = BASE_DIR/'staticfiles'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+#to auto install requirement.txt
+SCM_DO_BUILD_DURING_DEPLOYMENT=True
 
 for settings_file in ["local_settings"]:
     try:
