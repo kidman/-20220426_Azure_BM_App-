@@ -7,3 +7,4 @@ sphinx
 tox
 tox-gh-actions
 whitenoise
+psycopg2-binary

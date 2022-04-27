@@ -79,8 +79,15 @@ WSGI_APPLICATION = "example.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "treenav.sqlite3"),
+        #"ENGINE": "django.db.backends.sqlite3",
+        #"NAME": os.path.join(BASE_DIR, "treenav.sqlite3"),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '2022_04_21_django-treenav-develop',
+        'USER': 'kidman',
+        'PASSWORD': 'MyBookMarkApp@123',
+        'HOST': 'mybookmarkappdb01.postgres.database.azure.com',
+        'PORT': '5432',
+        'OPTIONS': {"sslmode" : "require"},
     }
 }
 
