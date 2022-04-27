@@ -1,0 +1,80 @@
+{% load treenav_tags i18n %}
+{% if menuitem.enabled_children %}
+<ul id="menu{% if menuitem.node.slug %}-{{ menuitem.node.slug }}{% endif %}" class="tree">
+
+    {% for item in menuitem.enabled_children %}
+    <li id="menu-item-{{ item.node.slug }}" class="{% if item.active %}active{% else %}inactive{% endif %}-menu-item{% if not menuitem.node.is_root_node %} {{ menuitem.node.slug }}-child{% else %} top-level{% endif %}">
+        <span class="caret"> <a class="{% if item.active %}active{% else %}inactive{% endif %}-menu-item-link{% if not menuitem.node.is_root_node %} {{ menuitem.node.slug }}-child-link{% else %} top-level-link{% endif %}" href="{% if item.node.href %}{{ item.node.href }}{% else %}{% url 'treenav_undefined_url' item_slug=item.node.slug %}{% endif %}" title="{{ item.node.label }}" target="{% if 'http' in item.node.href or 'https' in item.node.href  %}_blank {% else %}_self{% endif %}">{% trans item.node.label %}</a>
+            <!--{% if not menuitem.node.is_root_node %}child-link{% else %}top-level-link{% endif %}
+            {% if item.node.href %}Link{% else %}Folder{% endif %}-->
+            
+
+            {% if item.active or full_tree %}{% if not single_level %}
+            {% render_menu_children item %}
+            {% endif %}{% endif %} 
+            <!--{% if 'http' in item.node.href or 'https' in item.node.href  %}
+            Link
+            {% else %}
+             Folder
+            {% endif %}-->
+
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+ 
+
+
+<!--<ul id="menu-primary-nav">
+    <li><span class="caret">Beverages</span>
+      <ul class="nested">
+
+        <li>Water</li>
+        <li>Coffee</li>
+        <li><span class="caret">Tea</span>
+          <ul class="nested">
+            <li>Black Tea</li>
+            <li>White Tea</li>
+            <li><span class="caret">Green Tea</span>
+              <ul class="nested">
+                <li>Sencha</li>
+                <li>Gyokuro</li>
+                <li>Matcha</li>
+                <li>Pi Lo Chun</li>
+              </ul>
+            </li>
+          </ul>
+        </li>  
+      </ul>
+    </li>
+  </ul>-->
+
+  <!--<ul class="tree">
+    <li>
+      <details open>
+        <summary>Giant planets</summary>
+        <ul>
+          <li>
+            <details>
+              <summary>Gas giants</summary>
+              <ul>
+                <li>Jupiter</li>
+                <li>Saturn</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Ice giants</summary>
+              <ul>
+                <li>Uranus</li>
+                <li>Neptune</li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </details>
+    </li>
+  </ul>-->
+  

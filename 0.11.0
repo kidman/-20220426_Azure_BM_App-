@@ -1,0 +1,17 @@
+Collecting django-mptt
+  Downloading django_mptt-0.13.4-py3-none-any.whl (137 kB)
+     ------------------------------------ 137.1/137.1 KB 165.6 kB/s eta 0:00:00
+Collecting django-js-asset
+  Downloading django_js_asset-2.0.0-py3-none-any.whl (4.9 kB)
+Collecting Django>=2.2
+  Using cached Django-3.2.13-py3-none-any.whl (7.9 MB)
+Requirement already satisfied: asgiref<4,>=3.3.2 in c:\users\kumarvi\appdata\local\packages\pythonsoftwarefoundation.python.3.7_qbz5n2kfra8p0\localcache\local-packages\python37\site-packages (from Django>=2.2->django-js-asset->django-mptt) (3.5.0)
+Requirement already satisfied: pytz in c:\users\kumarvi\appdata\local\packages\pythonsoftwarefoundation.python.3.7_qbz5n2kfra8p0\localcache\local-packages\python37\site-packages (from Django>=2.2->django-js-asset->django-mptt) (2022.1)
+Requirement already satisfied: sqlparse>=0.2.2 in c:\users\kumarvi\appdata\local\packages\pythonsoftwarefoundation.python.3.7_qbz5n2kfra8p0\localcache\local-packages\python37\site-packages (from Django>=2.2->django-js-asset->django-mptt) (0.4.2)
+Requirement already satisfied: typing-extensions in c:\users\kumarvi\appdata\local\packages\pythonsoftwarefoundation.python.3.7_qbz5n2kfra8p0\localcache\local-packages\python37\site-packages (from asgiref<4,>=3.3.2->Django>=2.2->django-js-asset->django-mptt) (4.1.1)
+Installing collected packages: Django, django-js-asset, django-mptt
+  Attempting uninstall: Django
+    Found existing installation: Django 1.10.3
+    Uninstalling Django-1.10.3:
+      Successfully uninstalled Django-1.10.3
+Successfully installed Django-3.2.13 django-js-asset-2.0.0 django-mptt-0.13.4
