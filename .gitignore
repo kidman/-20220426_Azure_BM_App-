@@ -127,3 +127,6 @@ dmypy.json
 
 # misc
 .idea/
+
+#ignore sqlite
+treenav.sqlite3
