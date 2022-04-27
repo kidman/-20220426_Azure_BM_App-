@@ -26,6 +26,7 @@ SECRET_KEY = "%lam$s$t8t%8#@uk+fx=xm0x*@ccj5d0&z^8#ku4gb$lk@pfxt"
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+STATIC_ROOT = 'static'
 
 
 # Application definition

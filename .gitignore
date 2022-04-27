@@ -60,6 +60,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+treenav.sqlite3
 
 
 # Flask stuff:
@@ -130,4 +131,7 @@ dmypy.json
 .idea/
 
 #ignore sqlite
+<<<<<<< HEAD
 treenav.sqlite3
+=======
+>>>>>>> dceecbc5c57d68f8e9f81735f8b7f74757eaa8a2
