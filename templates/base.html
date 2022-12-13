@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>BookMarks!</title>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        </script>
         <style type="text/css">
             body {
                 font-family: Arial, "MS Trebuchet", sans-serif;
@@ -16,6 +18,11 @@
 
             ul, #menu-primary-nav {
             list-style-type: none;
+            font-size: 12px;
+            padding-inline-start: 10px;
+            }
+            li{
+                padding-left: 15px;
             }
 
             #menu-primary-nav {
@@ -29,6 +36,10 @@
             -moz-user-select: none; /* Firefox 2+ */
             -ms-user-select: none; /* IE 10+ */
             user-select: none;
+            /*background-color: #e62929;*/
+            /*background-image: url('/static/treenav/folder.png');*/
+            height: 16px;
+            width: 16px;
             }
 
             .caret::before {
@@ -36,12 +47,15 @@
             color: black;
             display: inline-block;
             margin-right: 6px;
+            
             }
 
             .caret-down::before {
             -ms-transform: rotate(90deg); 
             -webkit-transform: rotate(90deg); 
-            transform: rotate(90deg);  
+            transform: rotate(90deg); 
+            /*background-size: 16px 100px;
+            background-image: url('/static/treenav/open-folder.png');*/
             }
 
             .nested {
@@ -50,7 +64,44 @@
 
             .active {
             display: block;
+  
+            /**/
             }
+
+
+
+            /******************************/
+            /*ul.mytree  li.liParClosed { 
+                background-color: green;
+                fontWeight: normal;
+            }
+            ul.mytree  li.liParOpen { 
+                background-color: cyan;
+                fontWeight: normal;
+            }
+            .selected{
+                border: 3px solid yellow; 
+                background-color: yellow;
+                fontWeight: bold;
+            }
+            ul.mytree  liParOpen selected{ 
+                border: 3px solid red; 
+                background-color: yellow;
+                fontWeight: bold;
+            }
+            ul.mytree  li selected{ 
+                border: 3px solid red; 
+                background-color: yellow;
+                fontWeight: bold;
+            }
+            ul.mytree  li { 
+                background-color: white;
+                fontWeight: normal;
+            }
+            ul.mytree  { 
+                background-color: white;
+                fontWeight: normal;
+            }*/
         </style>
     </head>
     <body>
@@ -60,27 +111,26 @@
             <a href='{% url 'admin:index' %}'>admin</a>
         </p>
         <h2>BookMark</h2>
-        <ul id="myUL">
-            <li><span class="caret">Home</span>
-                {% show_treenav "primary-nav" full_tree="True" %}
+        <button type="button" id="expandTree" title="CAUTION: This will take some time to expand all branches.">
+            -</button> 
+        <INPUT type="button" id="collapseTree" value="+">
+        <ul id="tree1" class="mytree">  
+            <li id="theJob" class="my-clickable mytree liParOpen">  
+                <span class="caret caret-down">Home</span>
             </li>
-        </ul>
-        <!--<h2>single_level_menu</h2>
-        <h3>Level 0</h3>-->
-        <!--{% single_level_menu "primary-nav" 0 %}-->
-        <!--<h3>Level 1</h3>
-        {% single_level_menu "primary-nav" 1 %}
-        <h2>show_menu_crumbs</h2>
-        {% show_menu_crumbs "primary-nav" %}-->
-
+            {% show_treenav "primary-nav" full_tree="True" %}
+        </ul>    
+                    
         <script>
             var toggler = document.getElementsByClassName("caret");
             var i;
             
+            
+
             for (i = 0; i < toggler.length; i++) {
               toggler[i].addEventListener("click", function() {
                 this.parentElement.querySelector(".nested").classList.toggle("active");
-                this.classList.toggle("caret-down");
+                this.classList.toggle("caret");
               });
             }
 
@@ -95,6 +145,85 @@
 
                 return url.protocol === "http:" || url.protocol === "https:";
                 }
+
+           
+
+                $(document).ready(function(){
+                    $('#expandTree').on('click', function(event) {
+                                var all = $('.my-clickable');
+                                var closed = all.filter('.liParClosed');
+                                        
+                                closed.each(function(){
+                            $(this).removeClass('liParClosed').addClass('liParOpen');
+                                    $(this).next('ul').slideToggle();
+                                });
+                        }); // end expand button 
+                    
+                        // collapse button
+                    $('#collapseTree').on('click', function(event) {
+                                var all = $('.my-clickable');
+                                var open = all.filter('.liParOpen');
+
+                                open.each(function(){
+                            $(this).removeClass('liParOpen').addClass('liParClosed');
+                                    $(this).next('ul').slideToggle();
+                                });
+                        }); // end collapse button 
+                            
+                        // this is the top most level parents
+                        $(".my-clickable").on('click', function(event) {
+
+                            var taskId=$(this).closest("li").attr('id');
+                            var tsk = '#'.concat(taskId);  
+                        
+                            if (taskId != "theJob") {
+                                if ($(tsk).next('ul').length <= 0) {
+                            $(tsk).toggleClass("liParOpen liParClosed");
+                            //$(tsk).children('li').slideToggle();
+                            $(tsk).next('ul').slideToggle();
+                                }
+                                else { 
+                                        //$(event.target).find('ul').toggle();
+                                        $(tsk).toggleClass("liParOpen liParClosed");
+                            $(tsk).children('li').slideToggle();
+                            $(tsk).next('ul').slideToggle();
+                                }
+                            }  // end if taskId != "theJob"
+                        else {
+                            $(tsk).toggleClass("liParOpen liParClosed");
+                        $(tsk).slideToggle();
+                        }
+                            
+                            event.cancelBubble=true;
+                            event.stopPropagation();
+                        });
+                    
+                    //2nd level parents
+                        $(".my-clickable").on('click', ".my-clickable", function(event) {
+                            alert("in my-clickable 2");
+                            var taskId=$(this).closest("li").attr('id');
+                            var tsk = '#'.concat(taskId);
+                            
+                                //$(event.target).find('ul').slideToggle();
+                                $(tsk).toggleClass("liParOpen liParClosed");
+                            
+                            //event.cancelBubble=true;
+                            event.stopPropagation();
+                        });
+
+
+                    // first level child w/no children (parent=job)
+                        $(".child-click").on('click', function(event) {
+
+                            var taskId=$(this).closest("li").attr('id');
+                            var tsk = '#'.concat(taskId);
+                                    
+                            event.stopPropagation();
+                        });
+
+
+                });
+                
             </script>
     </body>
 </html>
