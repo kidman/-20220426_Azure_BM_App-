@@ -1,0 +1,26 @@
+{% load treenav_tags i18n %}
+{% if menuitem.enabled_children %}
+<ul id="treeList" class="mytree" name="treeList">
+
+    {% for item in menuitem.enabled_children|dictsort:"node.label" %}
+   
+    <li id="menu-item-{{ item.node.slug }}" class="mytree my-clickable liParOpen {% if item.active %}active{% else %}inactive{% endif %}-menu-item{% if not menuitem.node.is_root_node %} {{ menuitem.node.slug }}-child{% else %} top-level{% endif %}">
+        
+          {% if not 'http' in item.node.href or not 'https' in item.node.href  %} 
+            <span class="caret"> 
+              {% load static %}  <img src="{% if item.active %}{% static 'treenav/open-folder.png' %}{% else %}{% static 'treenav/folder.png' %}{% endif %}" alt="Folder" style="width:16px;height:16px;" />
+              {% trans item.node.label %}
+            </span>
+          {% else %}   
+            <img src="http://www.google.com/s2/favicons?domain={{ item.node.href }}">      
+            <a class="{% if item.active %}active{% else %}inactive{% endif %}-menu-item-link{% if not menuitem.node.is_root_node %} {{ menuitem.node.slug }}-child-link{% else %} top-level-link{% endif %}" href="{% if 'http' in item.node.href or 'https' in item.node.href  %}{{ item.node.href }}{% endif %}" title="{{ item.node.label }}" target="{% if 'http' in item.node.href or 'https' in item.node.href  %}_blank{% endif %}">{% trans item.node.label %}</a>        
+          {% endif %}
+          {% if item.active or full_tree %}{% if not single_level %}
+            {% render_menu_children item %}
+            {% endif %}{% endif %}  
+        
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+  
